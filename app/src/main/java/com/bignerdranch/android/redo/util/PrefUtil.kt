@@ -7,7 +7,7 @@ import com.bignerdranch.android.redo.MainActivity
 class PrefUtil {
     companion object{
 
-        private const val TIMER_LENGTH_ID = "com.resocoder.timer.timer_length"
+        private const val TIMER_LENGTH_ID = "com.bignerdranch.android.redo.timer_length"
         fun getTimerLength(context: Context):Int{
             val preferences = PreferenceManager.getDefaultSharedPreferences(context)
             return preferences.getInt(TIMER_LENGTH_ID, 10)
