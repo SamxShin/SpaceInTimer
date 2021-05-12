@@ -18,6 +18,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.Redo.NoActionBar"/>
+        <activity
             android:name=".SettingsActivity"
             android:label="Settings"
             android:parentActivityName=".MainActivity"
