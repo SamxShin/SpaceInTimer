@@ -8,20 +8,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class TimeViewModel(application: Application): AndroidViewModel(application) {
-
-    private val readAllData: LiveData<List<Time>>
+    val readAllData: LiveData<List<Time>>
     private val repository: TimeRepository
-
     init {
         val timeDao = TimeDatabase.getDatabase(application).TimeDao()
         repository = TimeRepository(timeDao)
         readAllData = repository.readAllData
     }
-
     fun addTime(time: Time){
         viewModelScope.launch(Dispatchers.IO) {
             repository.addTime(time)
         }
     }
-
 }

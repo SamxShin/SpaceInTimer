@@ -22,8 +22,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.content_main.*
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.random.Random.Default.nextInt
 
-//test
+
 
 class MainActivity : AppCompatActivity() {
     companion object{
@@ -55,6 +56,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var timer: CountDownTimer
     private var timerLengthSeconds: Long = 0L
     private var timerState = TimerState.Stopped
+
+    private var lengthInMintutes = 0;
 
     private var secondsRemaining = 0L
 
@@ -159,6 +162,7 @@ class MainActivity : AppCompatActivity() {
         progress_countdown.progress = 0
 
         insertDataIntoDatabase()
+        openDialog()
 
         PrefUtil.setSecondsRemaining(timerLengthSeconds, this)
         secondsRemaining = timerLengthSeconds
@@ -167,17 +171,22 @@ class MainActivity : AppCompatActivity() {
         updateCountdownUI()
     }
 
+    private fun openDialog() {
+        var dialog = PopUpFragment()
+        dialog.show(supportFragmentManager, "popup")
+
+    }
+
     private fun insertDataIntoDatabase() {
-        val completeTime = 11
-        val totalTime = 10
-        val sdf = SimpleDateFormat("dd/M/yyyy")
+        val sdf = SimpleDateFormat("M/dd/yyyy")
         val currentDate = sdf.format(Date())
+        val totalTime = (timerLengthSeconds/60)
 
+        //Todo: convert to int minute and pass it into Time()
 
-        val time = Time(0,completeTime, totalTime, currentDate)
+        val rnds = (0..Int.MAX_VALUE).random()
+        val time = Time(15, 10, lengthInMintutes, currentDate)
         mTimeViewModel.addTime(time)
-      //  Toast.makeText(requireContext(),"Successful", Toast.LENGTH_LONG).show()
-
     }
 
 
@@ -196,7 +205,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setNewTimerLength(){
-        val lengthInMintutes = PrefUtil.getTimerLength(this)
+        lengthInMintutes = PrefUtil.getTimerLength(this)
         timerLengthSeconds = (lengthInMintutes * 60L)
         progress_countdown.max = timerLengthSeconds.toInt()
     }
