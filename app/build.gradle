@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+
+
 }
 
 android {
@@ -51,7 +53,7 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'com.pavelsikun:material-seekbar-preference:2.3.0+'
 
-    // Navigation Component
+// Navigation Component
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
     implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
     //room dependencies

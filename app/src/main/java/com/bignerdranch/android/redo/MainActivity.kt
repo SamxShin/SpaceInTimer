@@ -10,11 +10,17 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.ViewModelProvider
+import com.bignerdranch.android.redo.data.Time
+import com.bignerdranch.android.redo.data.TimeViewModel
 import com.bignerdranch.android.redo.util.NotificationUtil
 import com.bignerdranch.android.redo.util.PrefUtil
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.android.synthetic.main.content_main.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 //test
@@ -55,6 +61,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var progressCountdown: ProgressBar
     private lateinit var textViewCountdown: TextView
+    private lateinit var mTimeViewModel: TimeViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +71,9 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         supportActionBar?.setIcon(R.drawable.ic_timer)
         supportActionBar?.title = "      Timer"
+
+        // Database
+        mTimeViewModel = ViewModelProvider(this).get(TimeViewModel::class.java)
 
         findViewById<FloatingActionButton>(R.id.fab_start).setOnClickListener { view ->
             startTimer()
@@ -148,12 +158,29 @@ class MainActivity : AppCompatActivity() {
 
         progress_countdown.progress = 0
 
+        insertDataIntoDatabase()
+
         PrefUtil.setSecondsRemaining(timerLengthSeconds, this)
         secondsRemaining = timerLengthSeconds
 
         updateButtons()
         updateCountdownUI()
     }
+
+    private fun insertDataIntoDatabase() {
+        val completeTime = 11
+        val totalTime = 10
+        val sdf = SimpleDateFormat("dd/M/yyyy")
+        val currentDate = sdf.format(Date())
+
+
+        val time = Time(0,completeTime, totalTime, currentDate)
+        mTimeViewModel.addTime(time)
+      //  Toast.makeText(requireContext(),"Successful", Toast.LENGTH_LONG).show()
+
+    }
+
+
 
     private fun startTimer(){
         timerState = TimerState.Running
