@@ -185,7 +185,7 @@ class MainActivity : AppCompatActivity() {
         //Todo: convert to int minute and pass it into Time()
 
         val rnds = (0..Int.MAX_VALUE).random()
-        val time = Time(15, 10, lengthInMintutes, currentDate)
+        val time = Time(16, 10, lengthInMintutes, currentDate)
         mTimeViewModel.addTime(time)
     }
 
@@ -269,5 +269,3 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
-//poopoopeepee
-//test
